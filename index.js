@@ -69,7 +69,7 @@ async function run() {
           image: updatedCar.image,
         },
       };
-      const result = await carsCollection.updateOne(filter.updateDoc, options);
+      const result = await carsCollection.updateOne(filter, updateDoc, options);
 
       // console.log(id);
       res.json(result);
