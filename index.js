@@ -55,6 +55,13 @@ async function run() {
       res.json(result);
     });
 
+    // update api
+    app.put("/cars/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      res.send("updating item");
+    });
+
     // delete item
     app.delete("/cars/:id", async (req, res) => {
       const id = req.params.id;
