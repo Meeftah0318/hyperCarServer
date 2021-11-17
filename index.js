@@ -59,7 +59,7 @@ async function run() {
     app.delete("/cars/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
-      const result = await packageCollection.deleteOne(query);
+      const result = await carsCollection.deleteOne(query);
 
       console.log("The following id is deleted", result);
       res.json(result);
