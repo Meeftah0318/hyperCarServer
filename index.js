@@ -36,14 +36,19 @@ async function run() {
       res.send(cars);
     });
 
+    // get single service
+
+    app.get("/cars/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const car = await carsCollection.findOne(query);
+      res.json(car);
+    });
+
     // post api
     app.post("/addCar", async (req, res) => {
       const newCar = req.body;
       const result = await carsCollection.insertOne(newCar);
-
-      console.log("hitting the posts", req.body);
-
-      console.log("data paisi", result);
 
       res.json(result);
     });
@@ -54,27 +59,19 @@ async function run() {
       const query = { _id: ObjectId(id) };
       const result = await packageCollection.deleteOne(query);
 
-      console.log("This id deleted", result);
+      console.log("The following id is deleted", result);
       res.json(result);
     });
-
-    // // create a document to insert
-    // const doc = {
-    //   title: "shamim",
-    //   content: "kicchu nai",
-    // };
-    // const result = await usersCollection.insertOne(doc);
-    // console.log(`A document was inserted with the _id: ${result.insertedId}`);
   } finally {
     // await client.close();
   }
 }
 
-// run run fn
+// run run function
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("Server started");
+  res.send("Server Running");
 });
 
 app.listen(port, () => {
