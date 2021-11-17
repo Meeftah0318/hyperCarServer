@@ -11,7 +11,8 @@ app.use(cors());
 app.use(express.json());
 
 // mongo
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.nz5qt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri =
+  "mongodb+srv://hyperCar:QJ7onvyGLU37GKPC@cluster0.nz5qt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 // console.log(uri);
 
@@ -45,7 +46,7 @@ async function run() {
       res.json(car);
     });
 
-    // post api
+    // post item
     app.post("/addCar", async (req, res) => {
       const newCar = req.body;
       const result = await carsCollection.insertOne(newCar);
@@ -53,7 +54,7 @@ async function run() {
       res.json(result);
     });
 
-    // delete packages
+    // delete item
     app.delete("/cars/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
