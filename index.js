@@ -46,7 +46,6 @@ async function run() {
     });
 
     // get single service
-
     app.get("/cars/:id", async (req, res) => {
       const id = req.params.id;
       // console.log(id);
@@ -83,6 +82,11 @@ async function run() {
     });
 
     // review;
+    app.get("/reviews", async (req, res) => {
+      const cursor = reviewsCollection.find({});
+      const review = await cursor.toArray();
+      res.send(review);
+    });
 
     app.post("/reviews", async (req, res) => {
       const newReview = req.body;
@@ -115,12 +119,14 @@ async function run() {
       res.json(result);
     });
 
+    // creating user db
     app.post("/users", async (req, res) => {
       const user = req.body;
       const result = await usersCollection.insertOne(user);
       res.json(result);
     });
 
+    // update user db
     app.put("/users", async (req, res) => {
       const user = req.body;
       const filter = { email: user.email };
