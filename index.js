@@ -98,7 +98,7 @@ async function run() {
       const updateDoc = {
         $set: review,
       };
-      const result = await usersCollection.updateOne(
+      const result = await reviewsCollection.updateOne(
         filter,
         updateDoc,
         options
