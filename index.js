@@ -31,9 +31,12 @@ async function run() {
   try {
     await client.connect();
     const database = client.db("luxury-cars");
+
     const carsCollection = database.collection("cars");
 
-    const userCollection = database.collection("users");
+    const usersCollection = database.collection("users");
+
+    const reviewsCollection = database.collection("reviews");
 
     // getting api
     app.get("/cars", async (req, res) => {
@@ -56,7 +59,6 @@ async function run() {
     app.post("/addCar", async (req, res) => {
       const newCar = req.body;
       const result = await carsCollection.insertOne(newCar);
-
       res.json(result);
     });
 
@@ -80,6 +82,29 @@ async function run() {
       res.json(result);
     });
 
+    review;
+    app.post("/addReview", async (req, res) => {
+      const newCar = req.body;
+      const result = await reviewsCollection.insertOne(newCar);
+
+      res.json(result);
+    });
+
+    // app.put("/review", async (req, res) => {
+    //   const review = req.body;
+    //   const filter = { _id : ObjectId()};
+    //   const options = { upsert: true };
+    //   const updateDoc = {
+    //     $set: review,
+    //   };
+    //   const result = await usersCollection.updateOne(
+    //     filter,
+    //     updateDoc,
+    //     options
+    //   );
+    //   res.json(result);
+    // });
+
     // delete item
     app.delete("/cars/:id", async (req, res) => {
       const id = req.params.id;
@@ -92,7 +117,7 @@ async function run() {
 
     app.post("/users", async (req, res) => {
       const user = req.body;
-      const result = await userCollection.insertOne(user);
+      const result = await usersCollection.insertOne(user);
       res.json(result);
     });
 
@@ -103,7 +128,11 @@ async function run() {
       const updateDoc = {
         $set: user,
       };
-      const result = userCollection.updateOne(filter, updateDoc, options);
+      const result = await usersCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
       res.json(result);
     });
   } finally {
