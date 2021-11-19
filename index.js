@@ -82,28 +82,29 @@ async function run() {
       res.json(result);
     });
 
-    review;
-    app.post("/addReview", async (req, res) => {
-      const newCar = req.body;
-      const result = await reviewsCollection.insertOne(newCar);
+    // review;
+
+    app.post("/review", async (req, res) => {
+      const newReview = req.body;
+      const result = await reviewsCollection.insertOne(newReview);
 
       res.json(result);
     });
 
-    // app.put("/review", async (req, res) => {
-    //   const review = req.body;
-    //   const filter = { _id : ObjectId()};
-    //   const options = { upsert: true };
-    //   const updateDoc = {
-    //     $set: review,
-    //   };
-    //   const result = await usersCollection.updateOne(
-    //     filter,
-    //     updateDoc,
-    //     options
-    //   );
-    //   res.json(result);
-    // });
+    app.put("/review", async (req, res) => {
+      const review = req.body;
+      const filter = { _id: ObjectId() };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: review,
+      };
+      const result = await usersCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.json(result);
+    });
 
     // delete item
     app.delete("/cars/:id", async (req, res) => {
