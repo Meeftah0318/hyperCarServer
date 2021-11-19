@@ -104,6 +104,7 @@ async function run() {
         $set: user,
       };
       const result = userCollection.updateOne(filter, updateDoc, options);
+      res.json(result);
     });
   } finally {
     // await client.close();
