@@ -15,6 +15,8 @@ app.use(express.json());
 const uri =
   "mongodb+srv://hyperCar:QJ7onvyGLU37GKPC@cluster0.nz5qt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
+// my process.env was creating problems, so set the original link instead
+
 // console.log(uri);
 
 // client
@@ -31,6 +33,8 @@ async function run() {
     const database = client.db("luxury-cars");
     const carsCollection = database.collection("cars");
 
+    const userCollection = database.collection("users");
+
     // getting api
     app.get("/cars", async (req, res) => {
       const cursor = carsCollection.find({});
@@ -42,6 +46,7 @@ async function run() {
 
     app.get("/cars/:id", async (req, res) => {
       const id = req.params.id;
+      // console.log(id);
       const query = { _id: ObjectId(id) };
       const car = await carsCollection.findOne(query);
       res.json(car);
@@ -82,6 +87,12 @@ async function run() {
       const result = await carsCollection.deleteOne(query);
 
       console.log("The following id is deleted", result);
+      res.json(result);
+    });
+
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const result = await userCollection.insertOne(user);
       res.json(result);
     });
   } finally {
