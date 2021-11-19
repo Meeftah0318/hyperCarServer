@@ -95,6 +95,16 @@ async function run() {
       const result = await userCollection.insertOne(user);
       res.json(result);
     });
+
+    app.put("/users", async (req, res) => {
+      const user = req.body;
+      const filter = { email: user.email };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: user,
+      };
+      const result = userCollection.updateOne(filter, updateDoc, options);
+    });
   } finally {
     // await client.close();
   }
