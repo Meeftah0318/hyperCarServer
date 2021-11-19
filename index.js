@@ -55,14 +55,14 @@ async function run() {
       res.json(car);
     });
 
-    // post item
+    // post item add new car
     app.post("/addCar", async (req, res) => {
       const newCar = req.body;
       const result = await carsCollection.insertOne(newCar);
       res.json(result);
     });
 
-    // update api
+    // update api update car
     app.put("/cars/:id", async (req, res) => {
       const id = req.params.id;
       const updatedCar = req.body;
@@ -84,14 +84,13 @@ async function run() {
 
     // review;
 
-    app.post("/review", async (req, res) => {
+    app.post("/reviews", async (req, res) => {
       const newReview = req.body;
       const result = await reviewsCollection.insertOne(newReview);
-
       res.json(result);
     });
 
-    app.put("/review", async (req, res) => {
+    app.put("/reviews", async (req, res) => {
       const review = req.body;
       const filter = { _id: ObjectId() };
       const options = { upsert: true };
